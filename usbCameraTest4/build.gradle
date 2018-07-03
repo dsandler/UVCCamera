@@ -25,7 +25,7 @@ apply plugin: 'com.android.application'
 
 android {
 	compileSdkVersion versionCompiler
-	buildToolsVersion versionBuildTool
+	buildToolsVersion '27.0.3'
 
 	compileOptions {
 		sourceCompatibility javaSourceCompatibility
@@ -49,5 +49,5 @@ android {
 }
 
 dependencies {
-    compile project(':usbCameraCommon')
+    implementation project(':usbCameraCommon')
 }

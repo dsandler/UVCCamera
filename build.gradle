@@ -2,9 +2,10 @@
 buildscript {
     repositories {
         jcenter()
-    }
+		google()
+	}
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha02'
     }
 }
 
@@ -12,7 +13,8 @@ allprojects {
     repositories {
 		maven { url 'http://raw.github.com/saki4510t/libcommon/master/repository/' }
         jcenter()
-    }
+		google()
+	}
 }
 
 task clean(type: Delete) {
@@ -23,7 +25,7 @@ ext {
 	supportLibVersion = '25.3.1'  // variable that can be referenced to keep support libs consistent
 	commonLibVersion= '1.5.20'
 	versionBuildTool = '25.0.2'
-	versionCompiler = 25
+	versionCompiler = 28
 	versionTarget = 23
 	versionNameString = '1.0.0'
 	javaSourceCompatibility = JavaVersion.VERSION_1_7
