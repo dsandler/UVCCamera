@@ -34,6 +34,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -43,6 +44,7 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
@@ -882,6 +884,7 @@ public final class USBMonitor {
 	 * @param _info
 	 * @return
 	 */
+	@TargetApi(Build.VERSION_CODES.M)
 	public static UsbDeviceInfo updateDeviceInfo(final UsbManager manager, final UsbDevice device, final UsbDeviceInfo _info) {
 		final UsbDeviceInfo info = _info != null ? _info : new UsbDeviceInfo();
 		info.clear();
@@ -1228,6 +1231,7 @@ public final class USBMonitor {
 		 * @return
 		 * @throws IllegalStateException
 		 */
+		@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 		public synchronized UsbInterface getInterface(final int interface_id, final int altsetting) throws IllegalStateException {
 			checkConnection();
 			SparseArray<UsbInterface> intfs = mInterfaces.get(interface_id);
@@ -1241,7 +1245,9 @@ public final class USBMonitor {
 				final int n = device.getInterfaceCount();
 				for (int i = 0; i < n; i++) {
 					final UsbInterface temp = device.getInterface(i);
-					if ((temp.getId() == interface_id) && (temp.getAlternateSetting() == altsetting)) {
+					final boolean matchAltSetting =
+							!BuildCheck.isLollipop() || (temp.getAlternateSetting() == altsetting);
+					if ((temp.getId() == interface_id) && matchAltSetting) {
 						intf = temp;
 						break;
 					}
